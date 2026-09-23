@@ -1,0 +1,335 @@
+<!-- 
+  ========================================================================
+  </> DEVELOPER SIGNATURE & PROPRIETARY CODE
+  ------------------------------------------------------------------------
+  Project         : Digital Visiting Card / ID Card
+  Owner & Creator : MD Anik Sheikh
+  Designation     : Marketing Officer, Eagle Security Service Pvt. LTD.
+  Date            : September 2026
+  Notice          : This code belongs exclusively to the creator named above.
+  ========================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Digital Visiting Card - MD Anik Sheikh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+
+        /* Real physical plastic PVC card shadow */
+        .pvc-card {
+            background: #ffffff;
+            box-shadow: 
+                0 25px 50px -12px rgba(15, 23, 42, 0.22),
+                0 0 0 1px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        /* GPU hardware acceleration for smooth physics drag */
+        #card-assembly {
+            will-change: transform;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            cursor: grab;
+        }
+
+        #card-assembly:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 text-slate-800 min-h-screen flex flex-col items-center justify-start pt-0 pb-10 px-4 overflow-hidden relative">
+
+    <!-- DYNAMIC SVG WOVEN LANYARD STRAP -->
+    <svg id="lanyard-svg" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+        <defs>
+            <linearGradient id="strap-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0f172a" />
+                <stop offset="50%" stop-color="#1e293b" />
+                <stop offset="100%" stop-color="#0f172a" />
+            </linearGradient>
+        </defs>
+        <!-- Outer Lanyard Ribbon -->
+        <path id="strap-path" d="" stroke="url(#strap-gradient)" stroke-width="18" stroke-linecap="round" fill="none" />
+        <!-- Inner Stitched Webbing Texture -->
+        <path id="strap-inner" d="" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,5" fill="none" opacity="0.3" />
+    </svg>
+
+    <!-- DRAGGABLE CARD ASSEMBLY -->
+    <div id="card-assembly" class="flex flex-col items-center w-full max-w-sm z-10 relative mt-0">
+
+        <!-- Chrome Metallic Clip Hook -->
+        <div id="clip-bracket" class="w-10 h-5 bg-gradient-to-r from-gray-300 via-white to-gray-400 rounded-sm shadow-md border border-gray-300 flex items-center justify-center relative z-20">
+            <div class="w-4 h-4 rounded-full border-2 border-slate-400 bg-slate-900 -bottom-2 relative shadow-inner"></div>
+        </div>
+
+        <!-- REPLICATED VISITING CARD STRUCTURE -->
+        <div class="w-full pvc-card rounded-[1.4rem] overflow-hidden relative mt-1 border border-slate-200/80">
+            
+            <!-- FADED WATERMARK COMPANY LOGO BACKGROUND -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/u/0/d/19-Hhdf9o_mQX59bLGmYjzFYmhi8_bgpy" alt="Watermark Logo" class="w-72 h-72 object-contain opacity-[0.08] scale-125">
+            </div>
+
+            <!-- TOP HEADER SECTION WITH WAVE -->
+            <div class="relative bg-[#0f172a] h-36 flex flex-col items-center w-full pt-4 z-10">
+                
+                <!-- Card Lanyard Hole Slot -->
+                <div class="flex justify-center mb-2 z-20">
+                    <div class="w-10 h-3 bg-white/20 rounded-full border border-black/20 shadow-inner flex items-center justify-center backdrop-blur-sm">
+                        <div class="w-6 h-1 bg-black/40 rounded-full"></div>
+                    </div>
+                </div>
+
+                <h2 class="text-white text-xs font-bold tracking-[0.2em] uppercase font-mono-custom z-20">Digital Visiting Card</h2>
+                <p class="text-blue-400 text-[10px] font-semibold uppercase tracking-wider z-20 mt-0.5">Digital ID - EAGLE08SEP2025</p>
+
+                <!-- Curved Bottom Overlay -->
+                <svg class="absolute -bottom-[1px] left-0 w-full h-12 z-10" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="#ffffff" d="M0,160 Q 720,320 1440,160 L 1440,320 L 0,320 Z"></path>
+                </svg>
+
+                <!-- Overlapping Profile Picture -->
+                <div class="absolute -bottom-14 left-1/2 -translate-x-1/2 z-30">
+                    <!-- Replace 'https://via.placeholder.com/150' with your photo link (e.g., 'profile.jpg') -->
+                    <img id="profile-img" src="https://lh3.googleusercontent.com/u/0/d/1Bun3YNvMl0gknb6JTJeNyvKQdCxSSNhP" alt="MD Anik Sheikh" class="w-28 h-28 object-cover rounded-full border-[4px] border-[#2563eb] bg-slate-200 shadow-md pointer-events-none">
+                </div>
+            </div>
+
+            <!-- NAME & PRIMARY HIGHLIGHT BADGE -->
+            <div class="mt-16 text-center px-4 relative z-10">
+                <h1 class="text-slate-900 font-extrabold text-xl tracking-tight">MD Anik Sheikh</h1>
+                <p class="text-blue-700 font-bold text-xs uppercase tracking-wider mt-0.5">Marketing Officer</p>
+                
+                <!-- Clickable Company Link -->
+                <a href="https://essbd01.blogspot.com/?m=1" target="_blank" onpointerdown="event.stopPropagation()" class="mt-2 inline-block bg-[#2563eb] hover:bg-blue-700 transition-colors cursor-pointer text-white font-bold text-xs px-5 py-1.5 rounded-full shadow-sm tracking-wide active:scale-95">
+                    Eagle Security Service Pvt. LTD.
+                </a>
+            </div>
+
+            <!-- OVERVIEW DATA TABLE -->
+            <div class="mt-4 px-6 text-[12px] text-slate-800 w-full relative z-10 font-medium">
+                <table class="w-full text-left border-separate border-spacing-y-1.5">
+                    <tr>
+                        <td class="font-bold text-slate-500 w-[100px]">Designation</td>
+                        <td class="w-3 text-center text-slate-400">:</td>
+                        <td class="font-bold text-slate-900">Marketing Officer</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-slate-500 align-top pt-0.5">Head Office</td>
+                        <td class="w-3 text-center text-slate-400 align-top pt-0.5">:</td>
+                        <td class="font-semibold text-slate-800 leading-snug">
+                            <a href="https://share.google/lEhKqLuVR0Usu0asv" target="_blank" class="text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition-colors group" onpointerdown="event.stopPropagation()">
+                                <i class="fa-solid fa-map-location-dot text-blue-500 group-hover:text-blue-700"></i>
+                                <span class="border-b border-blue-200 group-hover:border-blue-800">Location Map</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-slate-500">Joining Date</td>
+                        <td class="w-3 text-center text-slate-400">:</td>
+                        <td class="font-semibold text-slate-800">08 Sep 2025</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-slate-500 align-top">Validity</td>
+                        <td class="w-3 text-center text-slate-400 align-top">:</td>
+                        <td class="font-semibold text-slate-800 leading-snug">Until service ends</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- CALL TO ACTION BUTTONS -->
+            <div class="px-6 mt-4 relative z-10 space-y-2" onpointerdown="event.stopPropagation()">
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="tel:+880123456789" class="flex items-center justify-center gap-2 bg-[#0f172a] hover:bg-slate-800 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-md active:scale-95">
+                        <i class="fa-solid fa-phone text-blue-400"></i> Call Direct
+                    </a>
+                    <a href="https://wa.me/880123456789" target="_blank" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-md active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                    </a>
+                </div>
+
+                <button onclick="downloadVCard()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-xl border border-slate-300 transition flex items-center justify-center gap-2 active:scale-98">
+                    <i class="fa-solid fa-address-card text-blue-600"></i> Save Contact (.vcf)
+                </button>
+            </div>
+
+            <!-- NOTICE DISCLAIMER -->
+            <p class="text-center text-[10px] text-slate-400 font-medium mt-3 px-4 italic relative z-10">
+                * সততাই আমাদের শক্তি.
+            </p>
+
+            <!-- FOOTER WITH SOCIAL MEDIA ICONS -->
+            <div class="bg-slate-900 mt-4 px-6 py-3 border-t border-slate-800 flex justify-between items-center relative z-10" onpointerdown="event.stopPropagation()">
+                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-mono-custom">Connect Social</span>
+                
+                <!-- Social Links Row -->
+                <div class="flex items-center gap-3">
+                    <!-- Facebook -->
+                    <a href="https://facebook.com/6mdaniksheikh9" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-sm active:scale-90" title="Facebook">
+                        <i class="fa-brands fa-facebook-f text-xs"></i>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/6mdaniksheikh9" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-sm active:scale-90" title="Instagram">
+                        <i class="fa-brands fa-instagram text-xs"></i>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a href="https://github.com/6mdaniksheikh9" target="_blank" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition shadow-sm active:scale-90" title="GitHub">
+                        <i class="fa-brands fa-github text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PHYSICS ENGINE & INTERACTIVE DRAG SCRIPT -->
+    <script>
+        const card = document.getElementById('card-assembly');
+        const clipBracket = document.getElementById('clip-bracket');
+        const strapPath = document.getElementById('strap-path');
+        const strapInner = document.getElementById('strap-inner');
+
+        let posX = 0, posY = 0;       
+        let velX = 0, velY = 0;       
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let lastPointerX = 0, lastPointerY = 0;
+        let animFrameId = null;
+
+        // Spring Physics Tuning
+        const STIFFNESS = 0.12;      
+        const DAMPING = 0.81;        
+        const MASS = 1.2;            
+
+        function render() {
+            // Natural dynamic rotation tilt during dragging
+            const rotation = (posX * 0.08) + (velX * 0.04);
+            card.style.transform = `translate3d(${posX}px, ${posY}px, 0) rotate(${rotation}deg)`;
+
+            const anchorX = window.innerWidth / 2;
+            const anchorY = 0;
+
+            const rect = clipBracket.getBoundingClientRect();
+            const clipX = rect.left + (rect.width / 2);
+            const clipY = rect.top + 2;
+
+            const stretchAmount = Math.max(0, posY * 0.03);
+            const strapWidth = Math.max(10, 18 - stretchAmount);
+            strapPath.setAttribute('stroke-width', strapWidth);
+
+            const pathData = `M ${anchorX} ${anchorY} Q ${anchorX + (posX * 0.25)} ${(anchorY + clipY) / 2} ${clipX} ${clipY}`;
+            strapPath.setAttribute('d', pathData);
+            strapInner.setAttribute('d', pathData);
+        }
+
+        function physicsLoop() {
+            if (isDragging) return;
+
+            const forceX = -STIFFNESS * posX;
+            const forceY = -STIFFNESS * posY;
+
+            const accelX = forceX / MASS;
+            const accelY = forceY / MASS;
+
+            velX = (velX + accelX) * DAMPING;
+            velY = (velY + accelY) * DAMPING;
+
+            posX += velX;
+            posY += velY;
+
+            render();
+
+            if (Math.abs(velX) > 0.01 || Math.abs(velY) > 0.01 || Math.abs(posX) > 0.1 || Math.abs(posY) > 0.1) {
+                animFrameId = requestAnimationFrame(physicsLoop);
+            } else {
+                posX = 0; posY = 0;
+                velX = 0; velY = 0;
+                render();
+            }
+        }
+
+        card.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            card.setPointerCapture(e.pointerId);
+            startX = e.clientX - posX;
+            startY = e.clientY - posY;
+            lastPointerX = e.clientX;
+            lastPointerY = e.clientY;
+            velX = 0; velY = 0;
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+        });
+
+        card.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            velX = (e.clientX - lastPointerX) * 0.8;
+            velY = (e.clientY - lastPointerY) * 0.8;
+            lastPointerX = e.clientX;
+            lastPointerY = e.clientY;
+            posX = e.clientX - startX;
+            posY = e.clientY - startY;
+            render();
+        });
+
+        card.addEventListener('pointerup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            physicsLoop();
+        });
+
+        card.addEventListener('pointercancel', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            physicsLoop();
+        });
+
+        window.addEventListener('resize', render);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            posY = -200; 
+            render();
+            setTimeout(() => { physicsLoop(); }, 200);
+        });
+
+        // vCard Generator for Contact Import
+        function downloadVCard() {
+            const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:MD Anik Sheikh
+TITLE:Marketing Officer
+TEL;TYPE=CELL:+880123456789
+NOTE:Joining Date: 08 Sep 2025 | Valid until left the service
+URL;TYPE=Work:https://share.google/lEhKqLuVR0Usu0asv
+URL;TYPE=Facebook:https://facebook.com/6mdaniksheikh9
+URL;TYPE=Instagram:https://instagram.com/6mdaniksheikh9
+URL;TYPE=GitHub:https://github.com/6mdaniksheikh9
+END:VCARD`;
+
+            const blob = new Blob([vcardData], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.download = 'MD_Anik_Sheikh.vcf';
+            a.href = url;
+            a.click();
+        }
+    </script>
+</body>
+  </html>
